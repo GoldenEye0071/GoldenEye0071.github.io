@@ -342,7 +342,7 @@
 		console.log(circle.getCenter().lat() + "  " + circle.getCenter().lng());
 		service.nearbySearch({
           		location: circle.getCenter(),
-          		radius: 1000,
+          		radius: circle.getRadius(),
          		 type: ['restaurant']
         	}, callback);
 	}
