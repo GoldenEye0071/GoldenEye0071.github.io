@@ -99,6 +99,19 @@
         line-height: 30px;
         padding-left: 10px;
       }
+	#searchbox-panel{
+	    	 position: absolute;
+        	top: 0;
+        	left: 40%;
+        	z-index: 5;
+        	background-color: #fff;
+        	padding: 5px;
+        	border: 1px solid #999;
+        	text-align: center;
+        	font-family: 'Roboto','sans-serif';
+        	line-height: 30px;
+        	padding-left: 10px;
+	}
     </style>
 
     <script>
@@ -159,9 +172,9 @@
         	}, callback);
 		
 		// Create the search box and link it to the UI element.
-        	var input = document.getElementById('pac-input');
-        	var searchBox = new google.maps.places.SearchBox(input);
-        	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        	//var input = document.getElementById('pac-input');
+        	//var searchBox = new google.maps.places.SearchBox(input);
+        	//map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
 		getLocation();
 		circle = new google.maps.Circle({
@@ -350,7 +363,9 @@
     </script>
   </head>
   <body>
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+	<div id="searchbox-panel">
+	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+	  </div>
 	<div id="floating-panel">
       	<input onclick="clearCircle();" type=button value="Clear Circle"> 
 	<input onclick="getCountWithinCircle();" type=button value="Total Count within">  
