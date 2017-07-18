@@ -336,13 +336,18 @@
 	{
 		circle.setMap(null)
 	}
+	    
+	function getCountWithinCircle()
+	{
+		console.log(circle.getBounds().getCenter());
+	}
     </script>
   </head>
   <body>
 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 	<div id="floating-panel">
       	<input onclick="clearCircle();" type=button value="Clear Circle"> 
-	<input onclick="clearCircle();" type=button value="Total Count within">  
+	<input onclick="getCountWithinCircle();" type=button value="Total Count within">  
     	</div>
     <div id="map"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkdGVTeOTuF9wG07oFHrk5Mc6gaCr1wRM&libraries=places&callback=initMap" async defer></script>
