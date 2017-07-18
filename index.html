@@ -209,6 +209,12 @@
     		google.maps.event.addListener(map, 'mouseup', function (e) {
          		clearTimeout(t);
 			console.log(circle.getRadius());
+			setMapOnAll(null);
+			service.nearbySearch({
+          		location: circle.getRadius(),
+          		radius: 1000,
+         		 type: ['restaurant']
+        		}, callback);
     		});
 
 		google.maps.event.addListener(map, 'doubleclick', function() {
