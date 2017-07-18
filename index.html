@@ -208,11 +208,11 @@
 
     		google.maps.event.addListener(map, 'mouseup', function (e) {
          		clearTimeout(t);
+			console.log(circle.getRadius());
     		});
 
 		google.maps.event.addListener(map, 'doubleclick', function() {
-      		circle.setMap(null);
-			//console.log("dsf");
+      			circle.setMap(null);			
   		});
 
 	}
