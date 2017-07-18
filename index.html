@@ -106,29 +106,30 @@
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-      var map;
-      var infowindow;
-	var service;
-	var myLatLng;
+      	var map;
+      	var infowindow;
+      	var service;
+ 	var myLatLng;
 	var latit;
-      var longit;
+      	var longit;
 	var directionsService ;
 	var directionsDisplay;
 	var circle;
-      function initMap() {
-        var cebucity = {lat: 10.3157, lng: 123.8854};
-	  var mandaue = {lat: 10.3403, lng: 123.9416};
-	  var mandaue2 = {lat:10.329427, lng:123.944717};
-	  var lapulapu = {lat: 10.2662, lng: 123.9973};
-        map = new google.maps.Map(document.getElementById('map'), {
+      	
+	function initMap() {
+        	var cebucity = {lat: 10.3157, lng: 123.8854};
+	  	var mandaue = {lat: 10.3403, lng: 123.9416};
+	  	var mandaue2 = {lat:10.329427, lng:123.944717};
+	  	var lapulapu = {lat: 10.2662, lng: 123.9973};
+        	map = new google.maps.Map(document.getElementById('map'), {
           		center: mandaue ,
           		zoom: 13
-        		});
+        	});
 
         	infowindow = new google.maps.InfoWindow();
         	service = new google.maps.places.PlacesService(map);
 		directionsService = new google.maps.DirectionsService;
-            directionsDisplay = new google.maps.DirectionsRenderer;
+            	directionsDisplay = new google.maps.DirectionsRenderer;
 
 		directionsDisplay.setMap(map);
         	service.nearbySearch({
@@ -137,12 +138,12 @@
          		 type: ['restaurant']
         	}, callback);
 
-	//	var service2 = new google.maps.places.PlacesService(map);
 		service.nearbySearch({
           		location: mandaue,
           		radius: 1000,
          		 type: ['restaurant']
         	}, callback);
+		
 		service.nearbySearch({
           		location: mandaue2,
           		radius: 1000,
@@ -155,26 +156,27 @@
           		radius: 7000,
          		 type: ['restaurant']
         	}, callback);
-		 // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+		
+		// Create the search box and link it to the UI element.
+        	var input = document.getElementById('pac-input');
+        	var searchBox = new google.maps.places.SearchBox(input);
+        	map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
 		getLocation();
 		circle = new google.maps.Circle({
-           			 center: cebucity,
+           		 center: cebucity,
             		radius: 10,
             		strokeColor: "#0000FF",
             		strokeOpacity: 0.8,
             		strokeWeight: 2,
-           			 fillColor: "#0000FF",
+           		fillColor: "#0000FF",
             		fillOpacity: 0.4,
             		clickable: false
         	 });
 
 		 new LongPress(map, 500);
-    		var t;
-    		google.maps.event.addListener(map, 'longpress', function (e) {
+    		 var t;
+    		 google.maps.event.addListener(map, 'longpress', function (e) {
         		var radius = 100;
 
 			if (circle != null)
@@ -184,26 +186,25 @@
         		// Draw a circle around the radius
         		circle = new google.maps.Circle({
            			 center: e.latLng,
-            		radius: radius,
-            		strokeColor: "#0000FF",
-            		strokeOpacity: 0.8,
-            		strokeWeight: 2,
+            			radius: radius,
+            			strokeColor: "#0000FF",
+            			strokeOpacity: 0.8,
+            			strokeWeight: 2,
            			 fillColor: "#0000FF",
-            		fillOpacity: 0.4,
-            		clickable: false
-        	 });
-       	 circle.setMap(map);
-        	var start = 2;
-        	var speedup = 4;
-        	var grow = function () {
-            	radius = radius + 50;
-            	circle.setRadius(radius);
-            	t = setTimeout(grow, start);
-            	start = start / speedup;
-			//circle.setMap(null);
-       	 }
-        grow();
-   	 });
+            			fillOpacity: 0.4,
+            			clickable: false
+        	 	});
+       	 		circle.setMap(map);
+        		var start = 2;
+        		var speedup = 4;
+        		var grow = function () {
+            			radius = radius + 50;
+            			circle.setRadius(radius);
+            			t = setTimeout(grow, start);
+            			start = start / speedup;
+			}
+        		grow();
+   	 	});
 
     		google.maps.event.addListener(map, 'mouseup', function (e) {
          		clearTimeout(t);
@@ -214,8 +215,7 @@
 			//console.log("dsf");
   		});
 
-		//circle.setMap(null);
-      }
+	}
 
       function callback(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -231,29 +231,24 @@
       function createMarker(place) {
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location
-        });
+          		map: map,
+          		position: place.geometry.location
+        	});
 
         google.maps.event.addListener(marker, 'click', function() {
-          	
-		service.getDetails({
+        	service.getDetails({
           		placeId: place.place_id
-       	 }, function(place, status) {		
-			infowindow.setContent("");	
-			infowindow.setContent(place.formatted_address);
-		}); 		
+       	 		}, function(place, status) {		
+				infowindow.setContent("");	
+				infowindow.setContent(place.formatted_address);
+			}); 		
 
 		 latit = marker.getPosition().lat();
 		 longit = marker.getPosition().lng();
-          //   console.log("lat: " + latit);
-          //   console.log("lng: " + longit);
-          	infowindow.open(map, this);
-
-			
+               	infowindow.open(map, this);			
         });		
 
-		 marker.addListener('click', function() {
+	  	marker.addListener('click', function() {
                     directionsService.route({
                         // origin: document.getElementById('start').value,
                         origin: myLatLng,
@@ -276,7 +271,7 @@
 	function geoError()
 	{
             alert("Geocoder failed.");
-      }
+        }
 
 	function geoSuccess(position)
 	{
@@ -288,16 +283,8 @@
                 lng: longitude
             };
 
-	//	 var marker = new google.maps.Marker({
-         //			 map: map,
-          //			position: myLatLng 
-        //	});
-
-
-		//var position = new google.maps.LatLng(latitude , markers[i][2]);
-		console.log("lat" + latitude );
-		console.log("long" + longitude );
 	}
+	
 	function getLocation() {
 		var options = {
   			enableHighAccuracy: true,
