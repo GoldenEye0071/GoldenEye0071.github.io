@@ -1,0 +1,362 @@
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
+
+	 #floating-panel {
+        position: absolute;
+        top: 25px;
+        left: 50%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+
+    <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var map;
+      var infowindow;
+	var service;
+	var myLatLng;
+	var latit;
+      var longit;
+	var directionsService ;
+	var directionsDisplay;
+	var circle;
+      function initMap() {
+        var cebucity = {lat: 10.3157, lng: 123.8854};
+	  var mandaue = {lat: 10.3403, lng: 123.9416};
+	  var mandaue2 = {lat:10.329427, lng:123.944717};
+	  var lapulapu = {lat: 10.2662, lng: 123.9973};
+        map = new google.maps.Map(document.getElementById('map'), {
+          		center: mandaue ,
+          		zoom: 13
+        		});
+
+        	infowindow = new google.maps.InfoWindow();
+        	service = new google.maps.places.PlacesService(map);
+		directionsService = new google.maps.DirectionsService;
+            directionsDisplay = new google.maps.DirectionsRenderer;
+
+		directionsDisplay.setMap(map);
+        	service.nearbySearch({
+          		location: cebucity ,
+          		radius: 1000,
+         		 type: ['restaurant']
+        	}, callback);
+
+	//	var service2 = new google.maps.places.PlacesService(map);
+		service.nearbySearch({
+          		location: mandaue,
+          		radius: 1000,
+         		 type: ['restaurant']
+        	}, callback);
+		service.nearbySearch({
+          		location: mandaue2,
+          		radius: 1000,
+         		 type: ['restaurant']
+        	}, callback);
+
+	
+		service.nearbySearch({
+          		location: lapulapu,
+          		radius: 7000,
+         		 type: ['restaurant']
+        	}, callback);
+		 // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+
+		getLocation();
+		circle = new google.maps.Circle({
+           			 center: cebucity,
+            		radius: 10,
+            		strokeColor: "#0000FF",
+            		strokeOpacity: 0.8,
+            		strokeWeight: 2,
+           			 fillColor: "#0000FF",
+            		fillOpacity: 0.4,
+            		clickable: false
+        	 });
+
+		 new LongPress(map, 500);
+    		var t;
+    		google.maps.event.addListener(map, 'longpress', function (e) {
+        		var radius = 100;
+
+			if (circle != null)
+			{
+				circle.setMap(null);
+			}
+        		// Draw a circle around the radius
+        		circle = new google.maps.Circle({
+           			 center: e.latLng,
+            		radius: radius,
+            		strokeColor: "#0000FF",
+            		strokeOpacity: 0.8,
+            		strokeWeight: 2,
+           			 fillColor: "#0000FF",
+            		fillOpacity: 0.4,
+            		clickable: false
+        	 });
+       	 circle.setMap(map);
+        	var start = 2;
+        	var speedup = 4;
+        	var grow = function () {
+            	radius = radius + 50;
+            	circle.setRadius(radius);
+            	t = setTimeout(grow, start);
+            	start = start / speedup;
+			//circle.setMap(null);
+       	 }
+        grow();
+   	 });
+
+    		google.maps.event.addListener(map, 'mouseup', function (e) {
+         		clearTimeout(t);
+    		});
+
+		google.maps.event.addListener(map, 'doubleclick', function() {
+      		circle.setMap(null);
+			//console.log("dsf");
+  		});
+
+		//circle.setMap(null);
+      }
+
+      function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+
+          }
+		
+        }
+      }
+
+
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          	
+		service.getDetails({
+          		placeId: place.place_id
+       	 }, function(place, status) {		
+			infowindow.setContent("");	
+			infowindow.setContent(place.formatted_address);
+		}); 		
+
+		 latit = marker.getPosition().lat();
+		 longit = marker.getPosition().lng();
+          //   console.log("lat: " + latit);
+          //   console.log("lng: " + longit);
+          	infowindow.open(map, this);
+
+			
+        });		
+
+		 marker.addListener('click', function() {
+                    directionsService.route({
+                        // origin: document.getElementById('start').value,
+                        origin: myLatLng,
+                        // destination: marker.getPosition(),
+                        destination: {
+                            lat: latit,
+                            lng: longit
+                        },
+                        travelMode: 'DRIVING'
+                    }, function(response, status) {
+                        if (status === 'OK') {
+                            directionsDisplay.setDirections(response);
+                        } else {
+                            window.alert('Directions request failed due to ' + status);
+                        }
+                    });
+                });		
+	}
+
+	function geoError()
+	{
+            alert("Geocoder failed.");
+      }
+
+	function geoSuccess(position)
+	{
+		var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+		
+		 myLatLng = {
+                lat: latitude,
+                lng: longitude
+            };
+
+	//	 var marker = new google.maps.Marker({
+         //			 map: map,
+          //			position: myLatLng 
+        //	});
+
+
+		//var position = new google.maps.LatLng(latitude , markers[i][2]);
+		console.log("lat" + latitude );
+		console.log("long" + longitude );
+	}
+	function getLocation() {
+		var options = {
+  			enableHighAccuracy: true,
+  			timeout: 5000,
+  			maximumAge: 0
+		};
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(geoSuccess, geoError,options);
+                // alert("Geolocation is supported by this browser.");
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+	
+	function LongPress(map, length) {
+    		this.length_ = length;
+    		var me = this;
+    		me.map_ = map;
+    		me.timeoutId_ = null;
+    		google.maps.event.addListener(map, 'mousedown', function (e) {
+        		me.onMouseDown_(e);
+    		});
+   		 google.maps.event.addListener(map, 'mouseup', function (e) {
+        		me.onMouseUp_(e);
+   		 });
+    		google.maps.event.addListener(map, 'drag', function (e) {
+       		 me.onMapDrag_(e);
+    		});
+	};
+	
+	LongPress.prototype.onMouseUp_ = function (e) {
+    		clearTimeout(this.timeoutId_);
+	};
+
+	LongPress.prototype.onMouseDown_ = function (e) {
+    		clearTimeout(this.timeoutId_);
+    		var map = this.map_;
+    		var event = e;
+    		this.timeoutId_ = setTimeout(function () {
+        		google.maps.event.trigger(map, 'longpress', event);
+    		}, this.length_);
+	};
+
+	LongPress.prototype.onMapDrag_ = function (e) {
+    		clearTimeout(this.timeoutId_);
+	};
+
+	function clearCircle()
+	{
+		circle.setMap(null)
+	}
+    </script>
+  </head>
+  <body>
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+	<div id="floating-panel">
+      	<input onclick="clearCircle();" type=button value="Clear Circle">      	
+    	</div>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkdGVTeOTuF9wG07oFHrk5Mc6gaCr1wRM&libraries=places&callback=initMap" async defer></script>
+  </body>
+</html>
