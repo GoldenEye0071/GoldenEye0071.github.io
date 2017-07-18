@@ -88,7 +88,7 @@
 
 	 #floating-panel {
         position: absolute;
-        top: 25px;
+        top: 0;
         left: 40%;
         z-index: 5;
         background-color: #fff;
@@ -161,7 +161,7 @@
 		// Create the search box and link it to the UI element.
         	var input = document.getElementById('pac-input');
         	var searchBox = new google.maps.places.SearchBox(input);
-        	map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+        	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
 		getLocation();
 		circle = new google.maps.Circle({
