@@ -135,6 +135,7 @@
 	var directionsService ;
 	var directionsDisplay;
 	var circle;
+	var countResult=0;
       	
 	function initMap() {
         	var cebucity = {lat: 10.3157, lng: 123.8854};
@@ -339,32 +340,39 @@
 	function clearCircle()
 	{
 		circle.setMap(null)
+		//circle = null;
 	}
 
-	 function countWithinCircle(results, status) {
+	 function countWithinCircle(results, status,pagination) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-          }
 
-		if(circle != null){
-			// $('.marker-count span').html(results.length);
-			alert("Restaurant count within diameter is " + results.length);
+		countResult = countResult + results.length;
+           // for (var i = 0; i < results.length; i++) {
+             // createMarker(results[i]);
+           // }		
+
+		if (pagination.hasNextPage) {
+			pagination.nextPage();
+		}else{
+			if(circle != null){
+				alert("Restaurant count within diameter is " + countResult );
+			}
 		}
-		
         }
       }
 	    
 	function getCountWithinCircle()
 	{
 		console.log(circle.getCenter().lat() + "  " + circle.getCenter().lng());
+countResult = 0;
 		service.nearbySearch({
           		location: circle.getCenter(),
           		radius: circle.getRadius(),
          		 type: ['restaurant']
         	}, countWithinCircle);
 
-		
+		//alert("Restaurant count within diameter is " + countResult );
+
 	}
     </script>
   </head>
