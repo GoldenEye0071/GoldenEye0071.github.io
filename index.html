@@ -121,7 +121,7 @@
     </style>
 <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script src="js/bootstrap-waitingfor.min.js"></script>
     <script>
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
@@ -136,7 +136,7 @@
 	var directionsDisplay;
 	var circle;
 	var countResult=0;
-      	
+      var markers = [];
 	function initMap() {
         	var cebucity = {lat: 10.3157, lng: 123.8854};
 	  	var mandaue = {lat: 10.3403, lng: 123.9416};
@@ -253,7 +253,7 @@
           		placeId: place.place_id
        	 		}, function(place, status) {		
 				infowindow.setContent("");	
-				infowindow.setContent(place.formatted_address);
+				infowindow.setContent(place.name);
 			}); 		
 		 latit = marker.getPosition().lat();
 		 longit = marker.getPosition().lng();
@@ -347,15 +347,22 @@
         if (status === google.maps.places.PlacesServiceStatus.OK) {
 
 		countResult = countResult + results.length;
-           // for (var i = 0; i < results.length; i++) {
-             // createMarker(results[i]);
-           // }		
+            for (var i = 0; i < results.length; i++) {
+              //createMarker(results[i]);
+			markers.push(results[i]);
+            }		
 
 		if (pagination.hasNextPage) {
 			pagination.nextPage();
 		}else{
 			if(circle != null){
+waitingDialog.hide();
 				alert("Restaurant count within diameter is " + countResult );
+				for(var i=0; i < countResult; i++){
+					createMarker(markers[i]);
+				}
+				
+
 			}
 		}
         }
@@ -364,6 +371,8 @@
 	function getCountWithinCircle()
 	{
 		console.log(circle.getCenter().lat() + "  " + circle.getCenter().lng());
+waitingDialog.show('Please wait...');
+
 countResult = 0;
 		service.nearbySearch({
           		location: circle.getCenter(),
@@ -374,6 +383,19 @@ countResult = 0;
 		//alert("Restaurant count within diameter is " + countResult );
 
 	}
+
+	$( ".basic" ).click(function() {
+  		waitingDialog.show('Loading Something...');
+		setTimeout(function () {
+  		waitingDialog.hide();
+		}, 3000);
+	});
+
+	function showDialog()
+{
+waitingDialog.show('Loading Something...');
+
+}
     </script>
   </head>
   <body>
@@ -409,7 +431,7 @@ countResult = 0;
           					<ul class="nav navbar-nav navbar-right">
             				<li><a href="#menu-toggle" id="menu-toggle">Show Options</a></li>
             				<li><a href="#" onclick="clearCircle();">Clear Circle</a></li>
-            				<li><a href="#" onclick="getCountWithinCircle();">Get Count</a></li>            			
+            				<li><a href="#" onclick="getCountWithinCircle();">Get Count</a></li> 
           					</ul>
         				</div>
       			</div>
