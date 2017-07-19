@@ -1,14 +1,30 @@
 <html>
   <head>
     <title>Place searches</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
         height: 100%;
+		widht:100%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -103,9 +119,7 @@
         padding-left: 10px;      	
 	}
     </style>
-<script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   
-
-crossorigin="anonymous"></script>
+<script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
@@ -217,14 +231,6 @@ crossorigin="anonymous"></script>
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
-          }			
-        }
-      }
-	    
-	    function countWithinCircle(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
           }
 
 		if(circle != null){
@@ -233,6 +239,8 @@ crossorigin="anonymous"></script>
 		
         }
       }
+
+	
       function createMarker(place) {
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
@@ -332,6 +340,20 @@ crossorigin="anonymous"></script>
 	{
 		circle.setMap(null)
 	}
+
+	 function countWithinCircle(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
+
+		if(circle != null){
+			// $('.marker-count span').html(results.length);
+			alert("Restaurant count within diameter is " + results.length);
+		}
+		
+        }
+      }
 	    
 	function getCountWithinCircle()
 	{
@@ -347,19 +369,60 @@ crossorigin="anonymous"></script>
     </script>
   </head>
   <body>
-	<div id="searchbox-panel">
-	 <form class="navbar-form navbar-right"> <input type="text" class="form-control glyphicon glyphicon-search" placeholder="Search..."> <span 
-
-class="glyphicon glyphicon-search"></span> </form>
-	  </div>
-	<div id="floating-panel">
-      	<input onclick="clearCircle();" type=button value="Clear Circle"> 
-	<input onclick="getCountWithinCircle();" type=button value="Total Count within">
-	<div class="marker-count">
-    		Total restaurant around: <span></span>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Restaurant Type
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Pizza</a>
+                </li>
+                <li>
+                    <a href="#">Burger</a>
+                </li>
+                <li>
+                    <a href="#">Fast Food</a>
+                </li>
+                <li>
+                    <a href="#">Beverage</a>
+                </li>                
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+	<div id="page-content-wrapper">
+		<div class="container">
+			 <nav class="navbar-inverse">
+      			<div class="container-fluid">
+       			 	<div id="navbar" class="navbar-collapse collapse">
+          					<ul class="nav navbar-nav navbar-right">
+            				<li><a href="#menu-toggle" id="menu-toggle">Show Options</a></li>
+            				<li><a href="#" onclick="clearCircle();">Clear Circle</a></li>
+            				<li><a href="#" onclick="getCountWithinCircle();">Get Count</a></li>            			
+          					</ul>
+        				</div>
+      			</div>
+    			</nav>
+			<div id="map"></div>
+		<div>
 	</div>
-    	</div>
-    <div id="map"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkdGVTeOTuF9wG07oFHrk5Mc6gaCr1wRM&libraries=places&callback=initMap" async defer></script>
+
+	<!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
   </body>
 </html>
