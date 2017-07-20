@@ -123,7 +123,7 @@ width:50%;
 #searchbox{
 	padding:10px;
 	margin:10px;
-	border:1px solid #999;	
+	//border:1px solid #999;	
 	z-index:50;	
 	display:inline;
 }
@@ -137,6 +137,25 @@ input[type=checkbox], input[type=radio] {
 input[type=radio] {
   bottom: 2px;
 }
+
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
     </style>
 <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -467,7 +486,12 @@ input[type=radio] {
     </script>
   </head>
   <body>
- <div id="searchbox"><input id="pac-input" class="controls" type="text" value="Restaurant"></div>
+ <div id="searchbox">
+	<div class="inner-addon right-addon">
+		<i class="glyphicon glyphicon-search"></i>
+		<input id="pac-input" class="form-control" type="text" value="Restaurant">
+	</div>
+ </div>
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
