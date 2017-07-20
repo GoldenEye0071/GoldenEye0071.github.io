@@ -119,46 +119,56 @@
         padding-left: 10px;      	
 	}
 	   
-  .squaredFour {
-  	width: 20px;
-  	position: relative;
-  	margin: 20px auto;
-  	label {
-    		width: 20px;
-    		height: 20px;
-    		cursor: pointer;
-    		position: absolute;
-    		top: 0;
-    		left: 0;
-    		background: #fcfff4;
-    		background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-    		border-radius: 4px;
-    		box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
-    		&:after {
-      			content: '';
-      			width: 9px;
-      			height: 5px;
-      			position: absolute;
-      			top: 4px;
-      			left: 4px;
-      			border: 3px solid #333;
-      			border-top: none;
-      			border-right: none;
-      			background: transparent;
-      			opacity: 0;
-      			transform: rotate(-45deg);
-    		}
-    		&:hover::after {
-      			opacity: 0.5;
-    		}
- 	 }
-  	input[type=checkbox] {
-    		visibility: hidden;
-    		&:checked + label:after {
-      		opacity: 1;
-    		}
-  	}    
-	}
+  	.list {
+  margin: .5rem;
+}
+
+.list__item {
+  margin: 0 0 .5rem 0;
+  padding: 0;
+}
+
+.label--checkbox {
+  position: relative;
+  margin: .5rem;
+  font-family: Arial, sans-serif;
+  line-height: 135%;
+  cursor: pointer;
+}
+
+.checkbox {
+  position: relative;
+  top: -0.375rem;
+  margin: 0 1rem 0 0;
+  cursor: pointer;
+}
+.checkbox:before {
+   transition: all 0.3s ease-in-out;
+  content: "";
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #f2f2f2;
+}
+.checkbox:checked:before {
+  height: .5rem;
+  border-color: #009688;
+  border-top-style: none;
+  border-right-style: none;
+}
+.checkbox:after {
+  content: "";
+  position: absolute;
+  top: -0.125rem;
+  left: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  background: #fff;
+  cursor: pointer;
+}
+
     </style>
 <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -494,12 +504,34 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-           <div class="squaredFour">
-      		<input type="checkbox" value="Pizza" id="pizza" name="check"/> Pizza      		
-    	  </div>
-	  <div class="squaredFour">
-      		<input type="checkbox" value="Burger" id="burger" name="check"/> Burger     		
-    	  </div>
+           	<ul class="list">
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox" checked>
+            Pizza
+      </label>
+    </li>
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox">
+            Burger
+      </label>
+    </li>
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox">
+            Fast Food
+      </label>
+    </li>
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox">
+            Beverage
+      </label>
+    </li>
+  </ul>
+
+	 
         </div>
 
         <!-- /#sidebar-wrapper -->
