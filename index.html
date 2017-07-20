@@ -119,6 +119,15 @@
         padding-left: 10px;      	
 	}
 
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 1px;
+}
+
+input[type=radio] {
+  bottom: 2px;
+}
     </style>
 <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -185,7 +194,6 @@
         	});
 		
 		 searchBox.addListener('places_changed', function() { 
-
           var places = searchBox.getPlaces();
           if (places.length == 0) {
             return;
@@ -402,7 +410,6 @@
 			pagination.nextPage();
 		}else{
 			if(circle != null){
-
 				waitingDialog.hide();
 				if(markers != null && markers.length > 0){
 					for(var i=0; i < markers.length; i++){
@@ -442,7 +449,6 @@
 	{
 		waitingDialog.show('Loading Something...');
 	}
-
 	function filterMarkers(category)
 	{
 		
@@ -454,35 +460,22 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-		Restaurant Type
-           	<ul class="list">
-    <li class="list__item">
-      <label class="label--checkbox">
-          <input type="checkbox" class="checkbox">
-            Pizza
-      </label>
-    </li>
-    <li class="list__item">
-      <label class="label--checkbox">
-          <input type="checkbox" class="checkbox">
-            Burger
-      </label>
-    </li>
-    <li class="list__item">
-      <label class="label--checkbox">
-          <input type="checkbox" class="checkbox">
-            Fast Food
-      </label>
-    </li>
-    <li class="list__item">
-      <label class="label--checkbox">
-          <input type="checkbox" class="checkbox">
-            Beverage
-      </label>
-    </li>
-  </ul>
-
-	 
+		<h3>Restaurant Type</h3>
+           <label>
+  <input type="checkbox">
+  Pizza
+</label><br>
+<label>
+  <input type="checkbox">
+  Burger
+</label><br>	 <label>
+  <input type="checkbox">
+  Fast Food
+</label><br>
+	 <label>
+  <input type="checkbox">
+  Beverage
+</label>
         </div>
 
         <!-- /#sidebar-wrapper -->
