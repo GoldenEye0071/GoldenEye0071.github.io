@@ -136,7 +136,7 @@
 	var directionsDisplay;
 	var circle;
 	var countResult=0;
-      var markers = [];
+        var markers = [];
 	function initMap() {
         	var cebucity = {lat: 10.3157, lng: 123.8854};
 	  	var mandaue = {lat: 10.3403, lng: 123.9416};
@@ -178,25 +178,23 @@
 		 var input = document.getElementById('pac-input');
         	var searchBox = new google.maps.places.SearchBox(input);
         	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
        		// Bias the SearchBox results towards current map's viewport.
         	map.addListener('bounds_changed', function() {
           		searchBox.setBounds(map.getBounds());
         	});
 		
-		 searchBox.addListener('places_changed', function() {
-          var places = searchBox.getPlaces();
+		 searchBox.addListener('places_changed', function() { 
 
+          var places = searchBox.getPlaces();
           if (places.length == 0) {
             return;
           }
-
           // Clear out the old markers.
+		
           markers.forEach(function(marker) {
             marker.setMap(null);
           });
           markers = [];
-
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
           places.forEach(function(place) {
@@ -211,7 +209,6 @@
               anchor: new google.maps.Point(17, 34),
               scaledSize: new google.maps.Size(25, 25)
             };
-
             // Create a marker for each place.
             markers.push(new google.maps.Marker({
               map: map,
@@ -219,7 +216,6 @@
               title: place.name,
               position: place.geometry.location
             }));
-
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
@@ -284,14 +280,12 @@
           for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
           }
-
-		if(circle != null){
-			 $('.marker-count span').html(results.length);
-		}
+		//if(circle != null){
+		//	 $('.marker-count span').html(results.length);
+		//}
 		
         }
       }
-
 	
       function createMarker(place) {
         var placeLoc = place.geometry.location;
@@ -304,7 +298,7 @@
           		placeId: place.place_id
        	 		}, function(place, status) {		
 				infowindow.setContent("");	
-				infowindow.setContent(place.name);
+				infowindow.setContent(place.name + marker.category);
 			}); 		
 		 latit = marker.getPosition().lat();
 		 longit = marker.getPosition().lng();
@@ -327,7 +321,8 @@
                             window.alert('Directions request failed due to ' + status);
                         }
                     });
-                });		
+                });
+		markers.push(marker);		
 	}
 	function geoError()
 	{
@@ -393,27 +388,32 @@
 		circle.setMap(null)
 		//circle = null;
 	}
-
 	 function countWithinCircle(results, status,pagination) {
+		
+	
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-
 		countResult = countResult + results.length;
-            for (var i = 0; i < results.length; i++) {
-              //createMarker(results[i]);
-			markers.push(results[i]);
-            }		
-
+           // for (var i = 0; i < results.length; i++) {
+           //   createMarker(results[i]);
+		//	markers.push(results[i]);
+           // }		
 		if (pagination.hasNextPage) {
 			pagination.nextPage();
 		}else{
 			if(circle != null){
-waitingDialog.hide();
+
+				waitingDialog.hide();
+				if(markers != null && markers.length > 0){
+					for(var i=0; i < markers.length; i++){
+						markers[i].setMap(null);
+					}
+					markers = [];
+				}
 				alert("Restaurant count within diameter is " + countResult );
 				for(var i=0; i < countResult; i++){
-					createMarker(markers[i]);
+					createMarker(results[i]);
 				}
 				
-
 			}
 		}
         }
@@ -421,36 +421,35 @@ waitingDialog.hide();
 	    
 	function getCountWithinCircle()
 	{
-		console.log(circle.getCenter().lat() + "  " + circle.getCenter().lng());
-waitingDialog.show('Please wait...');
-
-countResult = 0;
+		
+		waitingDialog.show('Please wait...');
+		countResult = 0;
 		service.nearbySearch({
           		location: circle.getCenter(),
           		radius: circle.getRadius(),
          		 type: ['restaurant']
         	}, countWithinCircle);
-
-		//alert("Restaurant count within diameter is " + countResult );
-
+		
 	}
-
 	$( ".basic" ).click(function() {
   		waitingDialog.show('Loading Something...');
 		setTimeout(function () {
   		waitingDialog.hide();
 		}, 3000);
 	});
-
 	function showDialog()
-{
-waitingDialog.show('Loading Something...');
+	{
+		waitingDialog.show('Loading Something...');
+	}
 
-}
+	function filterMarkers(category)
+	{
+		
+	}
     </script>
   </head>
   <body>
-	   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+	   <input id="pac-input" class="controls" type="text" value="Restaurant">
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
