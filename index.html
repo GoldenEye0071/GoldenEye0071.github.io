@@ -1,25 +1,9 @@
-<html>
-  <head>
-    <title>Place searches</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-   <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/simple-sidebar.css" rel="stylesheet">
-   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Restaurant</title>
     <style>
+		
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
@@ -119,7 +103,6 @@ width:50%;
         line-height: 30px;
         padding-left: 10px;      	
 	}
-
 #searchbox{
 	padding:10px;
 	margin:10px;
@@ -127,145 +110,234 @@ width:50%;
 	z-index:50;	
 	display:inline;
 }
-
 input[type=checkbox], input[type=radio] {
   vertical-align: middle;
   position: relative;
   bottom: 1px;
 }
-
 input[type=radio] {
   bottom: 2px;
 }
-
 .inner-addon { 
     position: relative; 
 }
-
 /* style icon */
 .inner-addon .glyphicon {
   position: absolute;
   padding: 10px;
   pointer-events: none;
 }
-
 /* align icon */
 .left-addon .glyphicon  { left:  0px;}
 .right-addon .glyphicon { right: 0px;}
-
 /* add padding  */
 .left-addon input  { padding-left:  30px; }
 .right-addon input { padding-right: 30px; }
     </style>
-<script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="js/bootstrap-waitingfor.min.js"></script>
-    <script>
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-      	var map;
-      	var infowindow;
-      	var service;
- 	var myLatLng;
-	var latit;
-      	var longit;
-	var directionsService ;
-	var directionsDisplay;
-	var circle;
-	var countResult=0;
-        var markers = [];
-	function initMap() {
-        	var cebucity = {lat: 10.3157, lng: 123.8854};
-	  	var mandaue = {lat: 10.3403, lng: 123.9416};
-	  	var mandaue2 = {lat:10.329427, lng:123.944717};
-	  	var lapulapu = {lat: 10.2662, lng: 123.9973};
-        	map = new google.maps.Map(document.getElementById('map'), {
-          		center: mandaue ,
-          		zoom: 13,
-			disableDefaultUI: true
-        	});
-        	infowindow = new google.maps.InfoWindow();
-        	service = new google.maps.places.PlacesService(map);
-		directionsService = new google.maps.DirectionsService;
-            	directionsDisplay = new google.maps.DirectionsRenderer;
-		directionsDisplay.setMap(map);
-        	service.nearbySearch({
-          		location: cebucity ,
-          		radius: 1000,
-         		 type: ['restaurant']
-        	}, callback);
-		service.nearbySearch({
-          		location: mandaue,
-          		radius: 1000,
-         		 type: ['restaurant']
-        	}, callback);
-		
-		service.nearbySearch({
-          		location: mandaue2,
-          		radius: 1000,
-         		 type: ['restaurant']
-        	}, callback);
-	
-		service.nearbySearch({
-          		location: lapulapu,
-          		radius: 7000,
-         		 type: ['restaurant']
-        	}, callback);
-		
-		 var input = document.getElementById('pac-input');
-		var tt = document.getElementById('searchbox');
 
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+<script src="js/bootstrap-waitingfor.min.js"></script>
+  </head>
+
+  <body>
+    <div id="searchbox">
+	<div class="inner-addon right-addon">
+		<i class="glyphicon glyphicon-search"></i>
+		<input id="pac-input" class="form-control" type="text" value="Restaurant">
+	</div>
+ </div>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+		<h3>Restaurant Type</h3>
+
+ <label>
+  <input type="checkbox" onclick="boxclick(this,'mixed')" checked>
+  Mixed
+</label><br>
+
+           <label>
+  <input type="checkbox"  onclick="boxclick(this,'pizza')" checked>
+  Pizza
+</label><br>
+<label>
+  <input type="checkbox" onclick="boxclick(this,'burger')" checked>
+  Burger
+</label><br>
+ <label>
+  <input type="checkbox" onclick="boxclick(this,'pork')" checked>
+  Pork
+</label><br>
+
+<label>
+  <input type="checkbox" onclick="boxclick(this,'chicken')" checked>
+  Chicken
+</label><br>	 
+	 <label>
+  <input type="checkbox" onclick="boxclick(this,'fastfood')" checked>
+  Fast Food
+</label><br>
+ <label>
+  <input type="checkbox" onclick="boxclick(this,'donut')" checked>
+  Donut
+</label><br>
+
+	 <label>
+  <input type="checkbox" onclick="boxclick(this,'dessert')" checked>
+  Dessert
+</label>
+        </div>
+
+        <!-- /#sidebar-wrapper -->
+	
+	<nav class="navbar navbar-inverse">
+      		<div class="container">
+        		<div class="navbar-header">
+          		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+           			 <span class="sr-only">Toggle navigation</span>
+            			<span class="icon-bar"></span>
+           			 <span class="icon-bar"></span>
+            			<span class="icon-bar"></span>
+         		</button>          
+        		</div>
+        		<div id="navbar" class="navbar-collapse collapse">
+          		<ul class="nav navbar-nav navbar-left">
+            				<li><a href="#menu-toggle" id="menu-toggle">Show Options</a></li>
+            				<li><a href="#" onclick="clearCircle();">Clear Circle</a></li>
+            				<li><a href="#" onclick="getCount();">Get Count</a></li> 
+          		</ul>
+
+        		</div><!--/.navbar-collapse -->
+      		</div>
+    	</nav>
+	<div class="container">
+		
+		<div id="map"></div>
+	</div>
+	</div>
+
+    <script>
+      var customLabel = {
+        restaurant: {
+          label: 'R'
+        },
+        bar: {
+          label: 'B'
+        }
+      };
+
+		var directionsService ;
+            var	directionsDisplay;
+		var myLatLng;
+		var latit;
+      	var longit;
+		var service;
+		var markers_arr = [];
+		var circle;
+        function initMap() {
+
+	var marker;
+	var cebucity = {lat: 10.3157, lng: 123.8854};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: cebucity ,
+          zoom: 12,
+		disableDefaultUI: true
+        });
+
+	
+        var infoWindow = new google.maps.InfoWindow;
+	  directionsService = new google.maps.DirectionsService;
+        directionsDisplay = new google.maps.DirectionsRenderer;
+	  directionsDisplay.setMap(map);
+	service = new google.maps.places.PlacesService(map);
+	getLocation();
+
+	 var input = document.getElementById('pac-input');
+		var tt = document.getElementById('searchbox');
         	var searchBox = new google.maps.places.SearchBox(input);
         	map.controls[google.maps.ControlPosition.TOP_LEFT].push(tt);
        		// Bias the SearchBox results towards current map's viewport.
         	map.addListener('bounds_changed', function() {
           		searchBox.setBounds(map.getBounds());
         	});
+          // Change this depending on the name of your PHP or XML file
+          downloadUrl('rest.xml', function(data) {
+            var xml = data.responseXML;
+            var markers = xml.documentElement.getElementsByTagName('marker');
+            Array.prototype.forEach.call(markers, function(markerElem) {
+			console.log("pushing");
 		
-		 searchBox.addListener('places_changed', function() { 
-          var places = searchBox.getPlaces();
-          if (places.length == 0) {
-            return;
-          }
-          // Clear out the old markers.
+              var id = markerElem.getAttribute('id');
+              var name = markerElem.getAttribute('name');
+		  var category = markerElem.getAttribute('category');
+              var address = markerElem.getAttribute('address');
+              var type = markerElem.getAttribute('type');
+              var point = new google.maps.LatLng(
+                  parseFloat(markerElem.getAttribute('lat')),
+                  parseFloat(markerElem.getAttribute('lng')));
+
+              var infowincontent = document.createElement('div');
+              var strong = document.createElement('strong');
+              strong.textContent = name + ' ' + category
+              infowincontent.appendChild(strong);
+              infowincontent.appendChild(document.createElement('br'));
 		
-          markers.forEach(function(marker) {
-            marker.setMap(null);
+              var text = document.createElement('text');
+              text.textContent = address + ' ' + category;
+              infowincontent.appendChild(text);
+		//	infowincontent.appendChild()
+              var icon = customLabel[type] || {};
+              marker = new google.maps.Marker({
+                map: map,
+                position: point,
+                label: icon.label
+              });
+
+		marker.mycategory = category;
+
+			markers_arr.push(marker);
+ 		  // google.maps.event.addListener(marker, 'click', function() {
+        		//	 latit = marker.getPosition().lat();
+		 	//	longit = marker.getPosition().lng();               	
+        	  // });		
+
+              marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
+			latit = this.getPosition().lat();
+		 	longit = this.getPosition().lng();           
+		//console.log(latit + " " + longit);    
+			 directionsService.route({
+                        // origin: document.getElementById('start').value,
+                        origin: myLatLng,
+                        // destination: marker.getPosition(),
+                        destination: {
+                            lat: latit,
+                            lng: longit
+                        },
+                        travelMode: 'DRIVING'
+                    }, function(response, status) {
+                        if (status === 'OK') {
+                            directionsDisplay.setDirections(response);
+                        } else {
+                            window.alert('Directions request failed due to ' + status);
+                        }
+                    });
+			
+              });
+            });
+		
           });
-          markers = [];
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-            }
-            var icon = {
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-            }));
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-        });
 		
-		getLocation();
+		//console.log(markers_arr.length);
+		//for(var i=0; i < markers_arr.length; i++){
+		//	console.log(markers_arr[i].getPosition());
+		//}
+
 		circle = new google.maps.Circle({
            		 center: cebucity,
             		radius: 10,
@@ -297,7 +369,7 @@ input[type=radio] {
         	 	});
        	 		circle.setMap(map);
         		var start = 2;
-        		var speedup = 4;
+        		var speedup = 1;
         		var grow = function () {
             			radius = radius + 50;
             			circle.setRadius(radius);
@@ -313,60 +385,51 @@ input[type=radio] {
 		google.maps.event.addListener(map, 'doubleclick', function() {
       			circle.setMap(null);			
   		});
-	}
-      function callback(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-          }
-		//if(circle != null){
-		//	 $('.marker-count span').html(results.length);
-		//}
-		
         }
-      }
-	
-      function createMarker(place) {
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-          		map: map,
-          		position: place.geometry.location
-        	});
-        google.maps.event.addListener(marker, 'click', function() {
-        	service.getDetails({
-          		placeId: place.place_id
-       	 		}, function(place, status) {		
-				infowindow.setContent("");	
-				infowindow.setContent(place.name + marker.category);
-			}); 		
-		 latit = marker.getPosition().lat();
-		 longit = marker.getPosition().lng();
-               	infowindow.open(map, this);			
-        });		
-	  	marker.addListener('click', function() {
-                    directionsService.route({
-                        // origin: document.getElementById('start').value,
-                        origin: myLatLng,
-                        // destination: marker.getPosition(),
-                        destination: {
-                            lat: latit,
-                            lng: longit
-                        },
-                        travelMode: 'DRIVING'
-                    }, function(response, status) {
-                        if (status === 'OK') {
-                            directionsDisplay.setDirections(response);
-                        } else {
-                            window.alert('Directions request failed due to ' + status);
-                        }
-                    });
-                });
-		markers.push(marker);		
+
+
+	function getCount()
+	{
+		var loc1 = myLatLng; //Marker Radius Co-ords
+		var loc11 = circle.getCenter(); //new google.maps.LatLng(myLatLng.lat, myLatLng.lng); 
+		var c =0;
+		//console.log(myLatLng.lat);
+		for(var i=0; i < markers_arr.length; i++){
+			//console.log(markers_arr[i].getPosition().lat() + "  " +  markers_arr[i].getPosition().lng());
+			var loc2 = new google.maps.LatLng(markers_arr[i].getPosition().lat(), markers_arr[i].getPosition().lng()); //Marker Co-ords
+
+			var diff = google.maps.geometry.spherical.computeDistanceBetween(loc11 , loc2);
+			if (diff < circle.getRadius())
+				c =c + 1;
+			
+		}
+		//console.log(c);
+		alert("Restaurant count within circle is " + c);
+		
 	}
+      function downloadUrl(url, callback) {
+        var request = window.ActiveXObject ?
+            new ActiveXObject('Microsoft.XMLHTTP') :
+            new XMLHttpRequest;
+
+        request.onreadystatechange = function() {
+          if (request.readyState == 4) {
+            request.onreadystatechange = doNothing;
+            callback(request, request.status);
+          }
+        };
+
+        request.open('GET', url, true);
+        request.send(null);
+      }
+
+      function doNothing() {}
+
 	function geoError()
 	{
             alert("Geocoder failed.");
         }
+
 	function geoSuccess(position)
 	{
 		var latitude = position.coords.latitude;
@@ -422,128 +485,49 @@ input[type=radio] {
 	LongPress.prototype.onMapDrag_ = function (e) {
     		clearTimeout(this.timeoutId_);
 	};
-	function clearCircle()
-	{
-		circle.setMap(null)
-		//circle = null;
-	}
-	 function countWithinCircle(results, status,pagination) {
-		
 	
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-		countResult = countResult + results.length;
-           // for (var i = 0; i < results.length; i++) {
-           //   createMarker(results[i]);
-		//	markers.push(results[i]);
-           // }		
-		if (pagination.hasNextPage) {
-			pagination.nextPage();
-		}else{
-			if(circle != null){
-				waitingDialog.hide();
-				if(markers != null && markers.length > 0){
-					for(var i=0; i < markers.length; i++){
-						markers[i].setMap(null);
-					}
-					markers = [];
-				}
-				alert("Restaurant count within diameter is " + countResult );
-				for(var i=0; i < countResult; i++){
-					createMarker(results[i]);
-				}
-				
-			}
-		}
+function hide(category)
+{
+	 for (var i=0; i<markers_arr.length; i++) {
+          if (markers_arr[i].mycategory == category) {
+            markers_arr[i].setVisible(false);
+          }
         }
+        // == clear the checkbox ==
+       // document.getElementById(category+"box").checked = false;
+        // == close the info window, in case its open on a marker that we just hid
+       // infowindow.close();
+}
+
+ function show(category) {
+        for (var i=0; i<markers_arr.length; i++) {
+          if (markers_arr[i].mycategory == category) {
+            markers_arr[i].setVisible(true);
+          }
+        }
+        // == check the checkbox ==
+      //document.getElementById(category+"box").checked = true;
+   }
+
+
+  function boxclick(box,category) {
+        if (box.checked) {
+          show(category);
+        } else {
+          hide(category);
+        }
+        // == rebuild the side bar
+       // makeSidebar();
       }
-	    
-	function getCountWithinCircle()
-	{
-		
-		waitingDialog.show('Please wait...');
-		countResult = 0;
-		service.nearbySearch({
-          		location: circle.getCenter(),
-          		radius: circle.getRadius(),
-         		 type: ['restaurant']
-        	}, countWithinCircle);
-		
-	}
-	$( ".basic" ).click(function() {
-  		waitingDialog.show('Loading Something...');
-		setTimeout(function () {
-  		waitingDialog.hide();
-		}, 3000);
-	});
-	function showDialog()
-	{
-		waitingDialog.show('Loading Something...');
-	}
-	function filterMarkers(category)
-	{
-		
-	}
+
+	function clearCircle()
+{
+	circle.setMap(null)
+}
     </script>
-  </head>
-  <body>
- <div id="searchbox">
-	<div class="inner-addon right-addon">
-		<i class="glyphicon glyphicon-search"></i>
-		<input id="pac-input" class="form-control" type="text" value="Restaurant">
-	</div>
- </div>
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-		<h3>Restaurant Type</h3>
-           <label>
-  <input type="checkbox">
-  Pizza
-</label><br>
-<label>
-  <input type="checkbox">
-  Burger
-</label><br>	 <label>
-  <input type="checkbox">
-  Fast Food
-</label><br>
-	 <label>
-  <input type="checkbox">
-  Beverage
-</label>
-        </div>
-
-        <!-- /#sidebar-wrapper -->
-	
-	<nav class="navbar navbar-inverse">
-      		<div class="container">
-        		<div class="navbar-header">
-          		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-           			 <span class="sr-only">Toggle navigation</span>
-            			<span class="icon-bar"></span>
-           			 <span class="icon-bar"></span>
-            			<span class="icon-bar"></span>
-         		</button>          
-        		</div>
-        		<div id="navbar" class="navbar-collapse collapse">
-          		<ul class="nav navbar-nav navbar-left">
-            				<li><a href="#menu-toggle" id="menu-toggle">Show Options</a></li>
-            				<li><a href="#" onclick="clearCircle();">Clear Circle</a></li>
-            				<li><a href="#" onclick="getCountWithinCircle();">Get Count</a></li> 
-          		</ul>
-
-        		</div><!--/.navbar-collapse -->
-      		</div>
-    	</nav>
-	<div class="container">
-		
-		<div id="map"></div>
-	</div>
-	</div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkdGVTeOTuF9wG07oFHrk5Mc6gaCr1wRM&libraries=places&callback=initMap" async defer></script>
 
-	<!-- jQuery -->
-    <script src="js/jquery.js"></script>
+	<script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
