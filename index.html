@@ -327,6 +327,11 @@ input[type=radio] {
         	  // });		
 
               marker.addListener('click', function() {
+		      ga('set', "marker" + this.getAttribute('id'), 'hahaha4563r');
+		      ga(function(tracker) {
+  			var clientId = tracker.get("marker" + this.getAttribute('id'));
+  			console.log(clientId);
+			});
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
 			latit = this.getPosition().lat();
