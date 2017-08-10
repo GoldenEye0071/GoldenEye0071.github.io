@@ -327,7 +327,7 @@ input[type=radio] {
         	  // });		
 
               marker.addListener('click', function() {
-		      var markerCount = tracker.get("markercount" + id);
+		      var markerCount =  ga('get', "markercount" + id);
 		     markerCount = markerCount + 1;
 		      ga('set', "markercount" + id, markerCount);
 		      ga(function(tracker) {
