@@ -332,10 +332,15 @@ input[type=radio] {
 		     // console.log("count " + markerCount);
 		    // markerCount = markerCount + 1;
 		    //  ga('set', "markercount" + id, markerCount);
+		      var markerCount;
 		      ga(function(tracker) {
-  			var markerCount = tracker.get("markercount" + id);			      
+  			markerCount = tracker.get("markercount" + id);	
+			markerCount += 1;
 			console.log(markerCount);
 		      });
+		      
+		      ga('set', "markercount" + id, markerCount);
+		      
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
 			latit = this.getPosition().lat();
