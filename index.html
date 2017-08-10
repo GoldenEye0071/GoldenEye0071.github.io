@@ -165,6 +165,26 @@ input[type=radio] {
   </head>
 
   <body>
+	  <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+	  
     <div id="searchbox">
 	<div class="inner-addon right-addon">
 		<i class="glyphicon glyphicon-search"></i>
@@ -230,7 +250,7 @@ input[type=radio] {
             				<li><a href="#menu-toggle" id="menu-toggle">Show Options</a></li>
             				<li><a href="#" onclick="clearCircle();">Clear Circle</a></li>
             				<li><a href="#" onclick="getCount();">Get Count</a></li>
-				<li><a href="#" onclick="getCount();">Visit Count</a></li> 
+				<li><a href="#" data-target="#myModal">Visit Count</a></li> 
           		</ul>
 
         		</div><!--/.navbar-collapse -->
