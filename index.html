@@ -328,12 +328,13 @@ input[type=radio] {
 
               marker.addListener('click', function() {
 		      var markerCount =  ga('get', "markercount" + id);
-		     markerCount = markerCount + 1;
-		      ga('set', "markercount" + id, markerCount);
-		      ga(function(tracker) {
-  			var markerCount = tracker.get("markercount" + id);			      
-			console.log(markerCount);
-		      });
+		      console.log("count " + markerCount);
+		    // markerCount = markerCount + 1;
+		    //  ga('set', "markercount" + id, markerCount);
+		    //  ga(function(tracker) {
+  			//var markerCount = tracker.get("markercount" + id);			      
+			//console.log(markerCount);
+		      //});
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
 			latit = this.getPosition().lat();
