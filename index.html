@@ -319,7 +319,7 @@ input[type=radio] {
               });
 
 		marker.mycategory = category;
-
+		ga('set', "markercount" + id, 0);
 			markers_arr.push(marker);
  		  // google.maps.event.addListener(marker, 'click', function() {
         		//	 latit = marker.getPosition().lat();
@@ -327,11 +327,13 @@ input[type=radio] {
         	  // });		
 
               marker.addListener('click', function() {
-		      ga('set', "marker" + id, 'hahaha4563r');
+		      var markerCount = tracker.get("markercount" + id);
+		     markerCount = markerCount + 1;
+		      ga('set', "markercount" + id, markerCount);
 		      ga(function(tracker) {
-  			var clientId = tracker.get("marker" + id);
-  			console.log(clientId);
-			});
+  			var markerCount = tracker.get("markercount" + id);			      
+			console.log(markerCount);
+		      });
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
 			latit = this.getPosition().lat();
