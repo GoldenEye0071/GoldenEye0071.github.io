@@ -319,22 +319,23 @@ input[type=radio] {
               });
 
 		marker.mycategory = category;
-		ga('set', "markercount" + id, 0);
+		
 			markers_arr.push(marker);
  		  // google.maps.event.addListener(marker, 'click', function() {
         		//	 latit = marker.getPosition().lat();
 		 	//	longit = marker.getPosition().lng();               	
         	  // });		
-
+		 ga('set', "markercount" + id, 0);
               marker.addListener('click', function() {
-		      var markerCount =  ga('get', "markercount" + id);
-		      console.log("count " + markerCount);
+		     
+		     // var markerCount =  ga('get', "markercount" + id);
+		     // console.log("count " + markerCount);
 		    // markerCount = markerCount + 1;
 		    //  ga('set', "markercount" + id, markerCount);
-		    //  ga(function(tracker) {
-  			//var markerCount = tracker.get("markercount" + id);			      
-			//console.log(markerCount);
-		      //});
+		      ga(function(tracker) {
+  			var markerCount = tracker.get("markercount" + id);			      
+			console.log(markerCount);
+		      });
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
 			latit = this.getPosition().lat();
