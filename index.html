@@ -322,6 +322,7 @@ input[type=radio] {
 
 		marker.mycategory = category;
 		marker.myid = loopCount;
+		    console.log("loopcount " + loopCount + " my id " + marker.myid);
 			markers_arr.push(marker);
 		   
  		  // google.maps.event.addListener(marker, 'click', function() {
@@ -330,7 +331,7 @@ input[type=radio] {
         	  // });		
 		 ga('set', "markercount" +  marker.myid, 0);
               marker.addListener('click', function() {
-		     
+		     console.log("this my id " + this.myid);
 		     // var markerCount =  ga('get', "markercount" + id);
 		     // console.log("count " + markerCount);
 		    // markerCount = markerCount + 1;
