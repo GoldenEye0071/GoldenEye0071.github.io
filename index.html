@@ -289,7 +289,9 @@ input[type=radio] {
           downloadUrl('rest.xml', function(data) {
             var xml = data.responseXML;
             var markers = xml.documentElement.getElementsByTagName('marker');
+		  var loopCount  = 0;
             Array.prototype.forEach.call(markers, function(markerElem) {
+		    loopCount = loopCount + 1;
 			console.log("pushing");
 		
               var id = markerElem.getAttribute('id');
@@ -319,13 +321,14 @@ input[type=radio] {
               });
 
 		marker.mycategory = category;
-		
+		marker.myid = loopCount;
 			markers_arr.push(marker);
+		   
  		  // google.maps.event.addListener(marker, 'click', function() {
         		//	 latit = marker.getPosition().lat();
 		 	//	longit = marker.getPosition().lng();               	
         	  // });		
-		 ga('set', "markercount" +  markers_arr.length, 0);
+		 ga('set', "markercount" +  marker.myid, 0);
               marker.addListener('click', function() {
 		     
 		     // var markerCount =  ga('get', "markercount" + id);
@@ -335,13 +338,13 @@ input[type=radio] {
 		      var markerCount;
 		      
 		      ga(function(tracker) {
-  			markerCount = tracker.get("markercount" + markers_arr.length);	
+  			markerCount = tracker.get("markercount" + this.myid);	
 			
 			markerCount += 1;
 			console.log(markerCount);
 		      });
 		      
-		      ga('set', "markercount" + id, markerCount);
+		      ga('set', "markercount" + this.myid, markerCount);
 		      
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
