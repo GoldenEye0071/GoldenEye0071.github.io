@@ -14,6 +14,12 @@
   			var clientId = tracker.get('userId');
   			console.log(clientId);
 		});
+		
+		ga('send', 'event', 'Videos', 'play', 'Fall Campaign');
+		ga(function(tracker) {
+  			var clientId = tracker.get('event');
+  			console.log(clientId);
+		});
 	</script>
     <title>Restaurant</title>
     <style>
