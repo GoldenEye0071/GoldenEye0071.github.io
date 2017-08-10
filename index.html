@@ -10,6 +10,10 @@
   		ga('create', 'UA-104322608-1', 'auto');
   		ga('send', 'pageview');
 		ga('set', 'userId', 'as8eknlll');
+		ga(function(tracker) {
+  			var clientId = tracker.get('userId');
+  			console.log(clientId);
+		});
 	</script>
     <title>Restaurant</title>
     <style>
