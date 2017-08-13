@@ -460,10 +460,10 @@ input[type=radio] {
 			var  count = 0;
 			ga(function(tracker) {
   			 count = tracker.get(marker.myid);
-  			
-			});
-			    if(count > 0)
+  				 if(count > 0)
 		    		visitcount = visitcount + '<tr><td>' + marker.name + '</td><td>' + count + '</td></tr>' ;
+			});
+			   
 		    }
 		    
 		    visitcount = visitcount + '</table>';
