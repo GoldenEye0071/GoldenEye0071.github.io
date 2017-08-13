@@ -453,7 +453,14 @@ input[type=radio] {
 	    function openTest()
 	    {
 	    	console.log("dfd");
-		    $('#visit-count').html('dsfdsdfd fdsf');
+		    var visitcount = '<table><tr><td>Name</td><td>Count</td></tr>';
+		    for(int i = 0; i < markers_arr.length; i++){
+			var marker = markers_arr[i];
+		    	visitcount = visitcount + '<tr><td>' + marker.name + '</td><td>fdsf</td></tr>' ;
+		    }
+		    
+		    visitcount = visitcount + '</table>';
+		    $('#visit-count').html(visitcount);
 		  $('#myModal').modal('show');   
 	    }
 
