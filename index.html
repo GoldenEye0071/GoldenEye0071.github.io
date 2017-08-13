@@ -457,7 +457,13 @@ input[type=radio] {
 		    var visitcount = '<table><tr><td>Name</td><td>Count</td></tr>';
 		    for(var i = 0; i < markers_arr.length; i++){
 			var marker = markers_arr[i];
-		    	visitcount = visitcount + '<tr><td>' + marker.name + '</td><td>' + marker.myid + '</td></tr>' ;
+			var  count = 0;
+			ga(function(tracker) {
+  			 count = tracker.get(marker.myid);
+  			
+			});
+			    if(count > 0)
+		    		visitcount = visitcount + '<tr><td>' + marker.name + '</td><td>' + count + '</td></tr>' ;
 		    }
 		    
 		    visitcount = visitcount + '</table>';
