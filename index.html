@@ -280,6 +280,7 @@ input[type=radio] {
       	var longit;
 		var service;
 		var markers_arr = [];
+	        var visit_count_arr = [];
 		var circle;
         function initMap() {
 
@@ -365,9 +366,10 @@ input[type=radio] {
   			markerCount = tracker.get("markercount" + me.myid);	
 			console.log("me " + me.myid);
 			markerCount += 1;
+			      
 			console.log(markerCount);
 		      });
-		      
+		      visit_count_arr[this.myid]  = markerCount;
 		      ga('set', "markercount" + this.myid, markerCount);
 		      
                 infoWindow.setContent(infowincontent);
@@ -457,12 +459,12 @@ input[type=radio] {
 		    var visitcount = '<table><tr><td>Name</td><td>Count</td></tr>';
 		    for(var i = 0; i < markers_arr.length; i++){
 			var marker = markers_arr[i];
-			var  count = 0;
-			ga(function(tracker) {
-  			 count = tracker.get(marker.myid);
+			var  count = visit_count_arr[marker.myid];
+			//ga(function(tracker) {
+  			// count = tracker.get(marker.myid);
   				 if(count > 0)
 		    		visitcount = visitcount + '<tr><td>' + marker.name + '</td><td>' + count + '</td></tr>' ;
-			});
+			//});
 			   
 		    }
 		    
