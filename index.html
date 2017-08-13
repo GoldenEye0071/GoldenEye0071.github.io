@@ -456,7 +456,7 @@ input[type=radio] {
 		    var visitcount = '<table><tr><td>Name</td><td>Count</td></tr>';
 		    for(var i = 0; i < markers_arr.length; i++){
 			var marker = markers_arr[i];
-		    	visitcount = visitcount + '<tr><td>' + marker.name + '</td><td>fdsf</td></tr>' ;
+		    	visitcount = visitcount + '<tr><td>' + marker.getName() + '</td><td>' + marker.myid + '</td></tr>' ;
 		    }
 		    
 		    visitcount = visitcount + '</table>';
