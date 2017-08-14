@@ -357,7 +357,7 @@ input[type=radio] {
         		//	 latit = marker.getPosition().lat();
 		 	//	longit = marker.getPosition().lng();               	
         	  // });		
-		 ga('set', "markercount" +  marker.myid, 0);
+		// ga('set', "markercount" +  marker.myid, 0);
               marker.addListener('click', function() {
 		     console.log("this my id " + this.myid);
 		     // var markerCount =  ga('get', "markercount" + id);
@@ -367,7 +367,9 @@ input[type=radio] {
 		      var markerCount;
 		      var me = this;
 		      ga(function(tracker) {
-  			markerCount = tracker.get("markercount" + me.myid);	
+  			markerCount = tracker.get("markercount" + me.myid);
+			if(markerCount == null || markerCount == 0 || markerCount == undefined)
+				markerCount = 0;
 			console.log("me " + me.myid);
 			markerCount += 1;
 			      
